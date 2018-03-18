@@ -24,20 +24,20 @@ def gsBasis4(A) :
     # The zeroth column is easy, since it has no other vectors to make it normal to.
     # All that needs to be done is to normalise it. I.e. divide by its modulus, or norm.
     
-    print("original B[:,0]=", B[:,0])
+    # print("original B[:,0]=", B[:,0])
     # print(la.norm(B[:,0]))
     B[:, 0] = B[:, 0] / la.norm(B[:, 0])
-    print("final B[:,0]=",B[:,0])
+    # print("final B[:,0]=",B[:,0])
 
 
     # For the first column, we need to subtract any overlap with our new zeroth vector.
-    print("original B[:,1]=", B[:,1])
-    print("dot prod: B[:, 1] @ B[:, 0]=", B[:, 1] @ B[:, 0])
-    print("^^this doesn't seem right")  # todo: 
-    print("vector result: (B[:, 1] @ B[:, 0]) * B[:, 0]=", B[:, 1] @ B[:, 0] * B[:, 0])
+    # print("original B[:,1]=", B[:,1])
+    # print("dot prod: B[:, 1] @ B[:, 0]=", B[:, 1] @ B[:, 0])
+    # print("^^this doesn't seem right")  # todo: 
+    # print("vector result: (B[:, 1] @ B[:, 0]) * B[:, 0]=", B[:, 1] @ B[:, 0] * B[:, 0])
     
     B[:, 1] = B[:, 1] - (B[:, 1] @ B[:, 0]) * B[:, 0]
-    print("final B[:, 1]=", B[:, 1])
+    # print("final B[:, 1]=", B[:, 1])
     # @ is an infix operator for matrix multiplication (dot product in this case)
     # see https://www.python.org/dev/peps/pep-0465/ 
     
@@ -87,7 +87,7 @@ def gsBasis4(A) :
 
 
 #***********************************************************************************
-#  PART TWO 
+#  PART TWO: GRAM SCHMIDT FOR GENERAL MATRIX WITH N COLS 
 #***********************************************************************************
 
 # The second part of this exercise will generalise the procedure.
@@ -96,19 +96,31 @@ def gsBasis4(A) :
 def gsBasis(A) :
     B = np.array(A, dtype=np.float_) # Make B as a copy of A, since we're going to alter it's values.
     # Loop over all vectors, starting with zero, label them with i
+    
+    print("shape method gives num col: B.shape[1] =", B.shape[1])
+    # print("shape method gives num row: B.shape[2] =", B.shape[2])  # todo: how to get numrow? 
+    
     for i in range(B.shape[1]) :
         # Inside that loop, loop over all previous vectors, j, to subtract.
         for j in range(i) :
             # Complete the code to subtract the overlap with previous vectors.
             # you'll need the current vector B[:, i] and a previous vector B[:, j]
-            B[:, i] = 
+            B[:, i] = B[:, i] - (B[:, i] @ B[:, j]) * B[:, j]
         # Next insert code to do the normalisation test for B[:, i]
-        if :
+        if la.norm(B[:, i]) > verySmallNumber :  # i.e. approx not zero
+            B[:, i] = B[:, i] / la.norm(B[:, i])
+        else :
+            B[:, i] = np.zeros_like(B[:, i])
             
         
             
     # Finally, we return the result:
     return B
+
+
+#********************************************************************
+# PART THREE: FIND NUM DIMENSIONS
+#********************************************************************
 
 # This function uses the Gram-schmidt process to calculate the dimension
 # spanned by a list of vectors.
