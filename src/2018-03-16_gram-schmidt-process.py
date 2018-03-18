@@ -148,7 +148,7 @@ gsBasis4(V)
 # doing it again should give you the same result. Test this:
 U = gsBasis4(V)
 gsBasis4(U)
-
+gsBasis4(U) == U  # todo: this is wrong
 
 # Try the general function too.
 gsBasis(V)
