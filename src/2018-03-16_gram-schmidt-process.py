@@ -167,3 +167,20 @@ gsBasis(A)
 
 dimensions(A)
 
+
+
+# another non-square matrix: 
+B = np.array([[6,2,1,7,5],
+              [2,8,5,-4,1],
+              [1,-6,3,2,8]], dtype=np.float_)
+gsBasis(B)
+
+
+
+# Now let's see what happens when we have one vector that is a linear combination of the others.
+C = np.array([[1,0,2],
+              [0,1,-3],
+              [1,0,2]], dtype=np.float_)
+gsBasis(C)
+
+dimensions(C)
