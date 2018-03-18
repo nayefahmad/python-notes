@@ -56,7 +56,7 @@ def gsBasis4(A) :
     # Insert two lines of code, the first to subtract the overlap with the zeroth vector,
     # and the second to subtract the overlap with the first.
     B[:, 2] = B[:, 2] - (B[:, 2] @ B[:, 0]) * B[:, 0]
-    B[:, 2] = B[:, 2] - (B[:, 1] @ B[:, 1]) * B[:, 1]
+    B[:, 2] = B[:, 2] - (B[:, 2] @ B[:, 1]) * B[:, 1]
     
     # Again we'll need to normalise our new vector.
     # Copy and adapt the normalisation fragment from above to column 2.
@@ -97,7 +97,7 @@ def gsBasis(A) :
     B = np.array(A, dtype=np.float_) # Make B as a copy of A, since we're going to alter it's values.
     # Loop over all vectors, starting with zero, label them with i
     
-    print("shape method gives num col: B.shape[1] =", B.shape[1])
+    # print("shape method gives num col: B.shape[1] =", B.shape[1])
     # print("shape method gives num row: B.shape[2] =", B.shape[2])  # todo: how to get numrow? 
     
     for i in range(B.shape[1]) :
@@ -132,6 +132,10 @@ def dimensions(A) :
 
 
 
+
+
+
+
 #***********************************************************************************
 # TEST THE FUNCTION
 #***********************************************************************************
@@ -146,9 +150,9 @@ gsBasis4(V)
 
 # Once you've done Gram-Schmidt once,
 # doing it again should give you the same result. Test this:
-U = gsBasis4(V)
+U = gsBasis4(V); print(U)
 gsBasis4(U)
-gsBasis4(U) == U  # todo: this is wrong
+gsBasis4(U) - U < verySmallNumber  
 
 # Try the general function too.
 gsBasis(V)
