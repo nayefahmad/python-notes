@@ -55,21 +55,29 @@ def gsBasis4(A) :
     # Now we need to repeat the process for column 2.
     # Insert two lines of code, the first to subtract the overlap with the zeroth vector,
     # and the second to subtract the overlap with the first.
-    
+    B[:, 2] = B[:, 2] - (B[:, 2] @ B[:, 0]) * B[:, 0]
+    B[:, 2] = B[:, 2] - (B[:, 1] @ B[:, 1]) * B[:, 1]
     
     # Again we'll need to normalise our new vector.
     # Copy and adapt the normalisation fragment from above to column 2.
-    
+    if la.norm(B[:, 2]) > verySmallNumber :  # i.e. approx not zero
+        B[:, 2] = B[:, 2] / la.norm(B[:, 2])
+    else :
+        B[:, 2] = np.zeros_like(B[:, 2])
     
     
     
     # Finally, column three:
     # Insert code to subtract the overlap with the first three vectors.
-    
-    
+    B[:, 3] = B[:, 3] - (B[:, 3] @ B[:, 0]) * B[:, 0]
+    B[:, 3] = B[:, 3] - (B[:, 3] @ B[:, 1]) * B[:, 1]
+    B[:, 3] = B[:, 3] - (B[:, 3] @ B[:, 2]) * B[:, 2]
     
     # Now normalise if possible
-    
+    if la.norm(B[:, 3]) > verySmallNumber :  # i.e. approx not zero
+        B[:, 3] = B[:, 3] / la.norm(B[:, 3])
+    else :
+        B[:, 3] = np.zeros_like(B[:, 3])
     
     
     
