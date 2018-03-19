@@ -20,16 +20,22 @@ from readonly.bearNecessities import *
 # In this function, you will return the transformation matrix T,
 #   having built it out of an orthonormal basis set E that you create from Bear's Basis
 #   and a transformation matrix in the mirror's coordinates TE.
-def build_reflection_matrix(bearBasis) : # The parameter bearBasis is a 2×2 matrix that is passed to the function.
+
+# function definition: 
+def build_reflection_matrix(bearBasis) : 
+    # The parameter bearBasis is a 2×2 matrix that is passed to the function.
     # Use the gsBasis function on bearBasis to get the mirror's orthonormal basis.
-    E = 
-    # Write a matrix in component form that perform's the mirror's reflection in the mirror's basis.
+    E = gsBasis(bearBasis)
+    
+    # Write a matrix in component form that perform's the mirror's reflection 
+    #   in the mirror's basis.
     # Recall, the mirror operates by negating the last component of a vector.
     # Replace a,b,c,d with appropriate values
-    TE = np.array([[a, b],
-                   [c, d]])
+    TE = np.array([[1, 0],
+                   [0, -1]])
     # Combine the matrices E and TE to produce your transformation matrix.
-    T = 
+    T = E @ TE @ inv(E)
+    
     # Finally, we return the result. There is no need to change this line.
     return T
     
@@ -49,7 +55,7 @@ bearBasis = np.array(
     [[1,   -1],
      [1.5, 2]])
 # This line uses your code to build a transformation matrix for us to use.
-T = build_reflection_matrix(bearBasis)
+T = build_reflection_matrix(bearBasis)  # todo: have to source() the fn gsBasis first 
 
 # Bear is drawn as a set of polygons, the vertices of which are placed as a matrix list of column vectors.
 # We have three of these non-square matrix lists: bear_white_fur, bear_black_fur, and bear_face.
