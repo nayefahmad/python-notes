@@ -157,11 +157,50 @@ of entries.
 
 
 
+#***************************************************************
+# GRADED FUNCTION: 
+#***************************************************************
+'''
+In this assessment, you will be asked to produce a function that can calculate 
+the PageRank for an arbitrarily large probability matrix. This, the final 
+assignment of the course, will give less guidance than previous assessments. 
+You will be expected to utilise code from earlier in the worksheet and 
+re-purpose it to your needs.
+'''
 
 
+# Complete this function to provide the PageRank for an arbitrarily sized internet.
+# I.e. the principal eigenvector of the damped system, using the power iteration method.
+# (Normalisation doesn't matter here)
+# The functions inputs are the linkMatrix, and d the damping parameter - 
+# as defined in this worksheet.
+
+def pageRank(linkMatrix, d) :
+    n = linkMatrix.shape[0]
+    
+    # first set up r-nought: 
+    r = 100 * np.ones(n) / n
+    
+    # now set up matrix M (link matrix with damping taken into account):
+    M = d * linkMatrix + (1-d)/n * np.ones([n, n])  # np.ones() is the J matrix, with ones for each entry.
+
+    # Now use power iteration to find stable values of rankings: 
+    lastR = r
+    r = M @ r
+    i = 0
+    while la.norm(lastR - r) > 0.01 :
+        lastR = r
+        r = M @ r
+        i += 1
+    # print(str(i) + " iterations to convergence.")
+    
+    return r
 
 
-
+# test function: 7
+pageRank(L, 1)  # d=1 means no damping 
+pageRank(L2, 1)  # nonsensical result because of absorbing state
+pageRank(L2, .5)
 
 
 
