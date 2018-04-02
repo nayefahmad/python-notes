@@ -63,13 +63,24 @@ vecs
 M = np.array([[4, -5, 6],
               [7, -8, 6],
               [3/2, -1/2, -2]])
+vals, vecs = np.linalg.eig(M)
+vals
+vecs
 
+
+# checking for eigenvectors:
+# option B
 M @ np.array([-3, -3, -1]) == np.array([-3, -3, -1])  # is eigenvec
-M @ np.array([.5, -.5, -1]) == np.array([.5, -.5, -1])  # not eigenvec
-M @ np.array([-3,-2,1]) == np.array([-3,-2,1])  # not eigenvec
-M @ np.array([-1,1,-2]) == np.array([-1,1,-2]) # not eigenvec
-M @ np.array([-2/sqrt(9), -2/sqrt(9), 1/sqrt(9)])  == np.array([-2/sqrt(9), -2/sqrt(9), 1/sqrt(9)])  # not eigenvec
-M @ np.array([1/sqrt(6), -1/sqrt(6), 2/sqrt(6)]) ==  np.array([1/sqrt(6), -1/sqrt(6), 2/sqrt(6)])  # not eigenvec
+
+# option C: 
+M @ np.array([.5, -.5, -1]) == np.array([.5, -.5, -1]) * vals[0]
+M @ np.array([.5, -.5, -1]) == np.array([.5, -.5, -1]) * vals[1]
+M @ np.array([.5, -.5, -1]) == np.array([.5, -.5, -1]) * vals[2]
+
+
+M @ np.array([-2/sqrt(9), -2/sqrt(9), 1/sqrt(9)]) == np.array([-2/sqrt(9), -2/sqrt(9), 1/sqrt(9)]) * vals[0]  # not eigenvec
+
+
 
 
 
@@ -154,6 +165,10 @@ M @ v4 == (v4 * M_vals[1])
 
 
 # QUESTION 10: FIND A-squared: ------------------
+M @ M
+
+
+
 
 
 
