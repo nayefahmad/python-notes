@@ -79,6 +79,8 @@ M @ np.array([.5, -.5, -1]) == np.array([.5, -.5, -1]) * vals[2]
 
 
 M @ np.array([-2/sqrt(9), -2/sqrt(9), 1/sqrt(9)]) == np.array([-2/sqrt(9), -2/sqrt(9), 1/sqrt(9)]) * vals[0]  # not eigenvec
+M @ np.array([-2/sqrt(9), -2/sqrt(9), 1/sqrt(9)]) == np.array([-2/sqrt(9), -2/sqrt(9), 1/sqrt(9)]) * vals[1]  # not eigenvec
+M @ np.array([-2/sqrt(9), -2/sqrt(9), 1/sqrt(9)]) == np.array([-2/sqrt(9), -2/sqrt(9), 1/sqrt(9)]) * vals[2]  # not eigenvec
 
 
 
