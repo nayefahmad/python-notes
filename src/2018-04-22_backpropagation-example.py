@@ -53,9 +53,13 @@ d_sigma = lambda z : np.cosh(z/2)**(-2) / 4
 # any training already done.
 def reset_network (n1 = 6, n2 = 7, random=np.random) :
     global W1, W2, W3, b1, b2, b3
+    
+    # weights: 
     W1 = random.randn(n1, 1) / 2
     W2 = random.randn(n2, n1) / 2
     W3 = random.randn(2, n2) / 2
+    
+    # biases: 
     b1 = random.randn(n1, 1) / 2
     b2 = random.randn(n2, 1) / 2
     b3 = random.randn(2, 1) / 2
@@ -86,14 +90,20 @@ def J_W3 (x, y) :
     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
     # We'll use the variable J to store parts of our result as we go along, 
     # updating it in each line.
+    
     # Firstly, we calculate dC/da3, using the expressions above.
     J = 2 * (a3 - y)
-    # Next multiply the result we've calculated by the derivative of sigma, evaluated at z3.
+    
+    # Next multiply the result we've calculated by the derivative of sigma, 
+    # evaluated at z3.
     J = J * d_sigma(z3)
-    # Then we take the dot product (along the axis that holds the training examples) with the final partial derivative,
+    
+    # Then we take the dot product (along the axis that holds the training 
+    # examples) with the final partial derivative,
     # i.e. dz3/dW3 = a2
-    # and divide by the number of training examples, for the average over all training examples.
-    J = J @ a2.T / x.size
+    # and divide by the number of training examples, for the average over all 
+    # training examples.
+    J = J @ a2.T / x.size  # .T is for transpose? 
     # Finally return the result out of the function.
     return J
 
@@ -107,9 +117,11 @@ def J_b3 (x, y) :
     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
     # Next you should implement the first two partial derivatives of the Jacobian.
     # ===COPY TWO LINES FROM THE PREVIOUS FUNCTION TO SET UP THE FIRST TWO JACOBIAN TERMS===
-    J =
-    J =
-    # For the final line, we don't need to multiply by dz3/db3, because that is multiplying by 1.
+    J = 2 * (a3 - y)
+    J = J * d_sigma(z3)
+    
+    # For the final line, we don't need to multiply by dz3/db3, because that 
+    # is multiplying by 1.
     # We still need to sum over all training examples however.
     # There is no need to edit this line.
     J = np.sum(J, axis=1, keepdims=True) / x.size
