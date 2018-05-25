@@ -40,6 +40,8 @@ print('Shape of the faces dataset: {}'.format(faces.shape))
 # note: 64 * 64 = 4096
 # i.e., the 2d image is stored as a single vector 
 
+# faces.shape
+
 print('{} data points'.format(faces.shape[0]))
 # there are 400 vectors in our dataset 
 
@@ -77,4 +79,114 @@ def mean_naive(X):
         mean = np.mean(D) # EDIT THIS
     return mean
     
+
+
+def cov_naive(X):
+    """Compute the covariance for a dataset
+    Arguments
+    ---------
+    X: (N, D) ndarray representing the dataset.
     
+    Returns
+    -------
+    covariance: (D, D) ndarray which is the covariance matrix of the dataset.
+    
+    """
+    N, D = X.shape
+    covariance = np.zeros((D, D))
+    for n in range(N):
+        covariance = np.cov((D, D)) # EDIT THIS
+    return covariance    
+
+
+
+# 3. MEAN AND COVARIANCE USING VECTORIZED OPERATIONS: ------------------------
+def mean(X):
+    """Compute the mean for a dataset
+    
+    Arguments
+    ---------
+    X: (N, D) ndarray representing the dataset.
+    
+    Returns
+    -------
+    mean: (D, ) ndarray which is the mean of the dataset.
+    """
+    mean = X.mean(axis=0) # EDIT THIS
+    return mean
+
+
+def cov(X):
+    """Compute the covariance for a dataset
+    Arguments
+    ---------
+    X: (N, D) ndarray representing the dataset.
+    
+    Returns
+    -------
+    covariance_matrix: (D, D) ndarray which is the covariance matrix of the dataset.
+    
+    """
+    # It is possible to vectorize our code for computing the covariance, i.e. we do not need to explicitly
+    # iterate over the entire dataset as looping in Python tends to be slow
+    N, D = X.shape
+    covariance_matrix = np.cov(D, D) # EDIT THIS
+    return covariance_matrix
+
+
+
+# calculate the mean face: 
+def mean_face(faces):
+    """Compute the mean of the `faces`
+    
+    Arguments
+    ---------
+    faces: (N, 64 * 64) ndarray representing the faces dataset.
+    
+    Returns
+    -------
+    mean_face: (64, 64) ndarray which is the mean of the faces.
+    """
+    mean_face = mean(faces)
+    return mean_face
+
+plt.imshow(mean_face(faces).reshape((64, 64)), cmap='gray');
+
+
+
+
+# 4. PERFORMANCE BENCHMARKING WITH TIME FUNCTIONS: -------------------------------------------
+# We have some huge data matrix, and we want to compute its mean
+X = np.random.randn(100000, 20)
+# Benchmarking time for computing mean
+%time mean_naive(X)
+%time mean(X)
+pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
