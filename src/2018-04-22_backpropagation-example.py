@@ -164,15 +164,62 @@ def J_b2 (x, y) :
     J = (J.T @ W3).T
     
     # then find da2/dz2
-    J = J * d_sigma(z3)
+    J = J * d_sigma(z2)
     
     # dz/db = 1, so no need to multiply that 
     J = np.sum(J, axis=1, keepdims=True) / x.size
     return J
 
     
+#********************************************************************
+# Jacobian of the Cost fn with respect to the THIRD layer weights and biases. 
+#********************************************************************    
+# derivative with respect to weights: -------------
+def J_W1 (x, y) :
+    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
     
+    # first find dC/da3
+    J = 2 * (a3 - y)
     
+    # then find da3/da2, first σ' and then W3         
+    J = J * d_sigma(z3)
+    J = (J.T @ W3).T
+    
+    # now find da2/da1, first σ' and then W2
+    J = J * d_sigma(z2)
+    J = (J.T @ W2).T
+    
+    # then find da1/dz1
+    J = J * d_sigma(z1)
+    
+    # finally, we know that dz/dw = a0
+    J = J @ a0.T / x.size
+    return J
+
+
+# derivative with respect to biases: -------------     
+def J_b1 (x, y) :
+    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+    
+    # first find dC/da3
+    J = 2 * (a3 - y)
+    
+    # then find da3/da2, first σ' and then W3         
+    J = J * d_sigma(z3)
+    J = (J.T @ W3).T
+    
+    # now find da2/da1, first σ' and then W2
+    J = J * d_sigma(z2)
+    J = (J.T @ W2).T
+    
+    # then find da1/dz1
+    J = J * d_sigma(z1)
+    
+    # finally, we know that dz/db = 1: 
+    J = J * 1
+    
+    J = np.sum(J, axis=1, keepdims=True) / x.size
+    return J    
     
     
     
