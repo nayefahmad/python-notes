@@ -90,16 +90,50 @@ print('correct')
 plot_vector(b, a)
 
 
+# 3. EXPLORING MNIST DIGITS DATASET: ------------------------------------------
+import sklearn
+from sklearn.datasets import fetch_mldata
+from ipywidgets import interact
+MNIST = fetch_mldata('MNIST original', data_home='./MNIST')
+
+plt.imshow(MNIST.data[MNIST.target==0].reshape(-1, 28, 28)[0], cmap='gray');
+# todo: ^^ how does this work? 
 
 
+'''
+But we have the following questions:
 
+1) What does it mean for two digits in the MNIST dataset to be different by our distance function?
+2) Furthermore, how are different classes of digits different for MNIST digits? Let's find out!
+For the first question, we can see just how the distance between digits compare among all distances for the first 500 digits;
+'''
+distances = []
+for i in range(len(MNIST.data[:500])):
+    for j in range(len(MNIST.data[:500])):
+        distances.append(distance(MNIST.data[i], MNIST.data[j]))
 
+len(distances)
+distances[:50]
 
-
-
-
-
-
+@interact(first=(0, 499), second=(0, 499), continuous_update=False)
+def show_img(first, second):
+    plt.figure(figsize=(8,4))
+    f = MNIST.data[first].reshape(28, 28)
+    s = MNIST.data[second].reshape(28, 28)
+    
+    ax0 = plt.subplot2grid((2, 2), (0, 0))
+    ax1 = plt.subplot2grid((2, 2), (1, 0))
+    ax2 = plt.subplot2grid((2, 2), (0, 1), rowspan=2)
+    
+    #plt.imshow(np.hstack([f,s]), cmap='gray')
+    ax0.imshow(f, cmap='gray')
+    ax1.imshow(s, cmap='gray')
+    ax2.hist(np.array(distances), bins=50)
+    d = distance(f, s)
+    ax2.axvline(x=d, ymin=0, ymax=40000, color='C4', linewidth=4)
+    ax2.text(0, 46000, "Distance is {:.2f}".format(d), size=12)
+    ax2.set(xlabel='distance', ylabel='number of images')
+    plt.show()
 
 
 
