@@ -67,5 +67,49 @@ pairwise_distance_matrix(M, N)
 
 # 2. PLOTTING AND TESTING: ------------------------------------------------------
 
+# function for plotting: 
+def plot_vector(v, w):
+    """Plot two vectors `v` and `w` of dimension 2"""
+    fig = plt.figure(figsize=(4,4))
+    ax = fig.gca()
+    plt.xlim([-2, 2])
+    plt.ylim([-2, 2])
+    plt.grid()
+    ax.arrow(0, 0, v[0], v[1], head_width=0.05, head_length=0.1, 
+             length_includes_head=True, linewidth=2, color='r');
+    ax.arrow(0, 0, w[0], w[1], head_width=0.05, head_length=0.1, 
+             length_includes_head=True, linewidth=2, color='r');
+             
+# Some sanity checks, you may want to have more interesting test cases to test your implementation
+a = np.array([1,0])
+b = np.array([0,1])
+np.testing.assert_almost_equal(distance(a, b), np.sqrt(2))
+assert((angle(a,b) / (np.pi * 2) * 360.) == 90)
+print('correct')
+
+plot_vector(b, a)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
