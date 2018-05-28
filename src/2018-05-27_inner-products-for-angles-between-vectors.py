@@ -11,6 +11,15 @@ Created on Sun May 27 16:34:56 2018
 
 import numpy as np
 
+'''
+# NOTE: 
+Since we're not using standard dot product to find angles, 
+results will be a little weird. 
+Ex: normally we think of angle between [1,1] and [-1, 1] as 
+90 degrees, but this isn't necessarily true when using other r
+definitions of the inner product. 
+
+'''
 
 # def fn to find angles:
 def cos_angle(x, y, M):
@@ -61,11 +70,31 @@ angle
 
 
 # Q4 ------------------------------------------------------------------------
+x = np.array([1, 1])
+y = np.array([1, -1])
+
+M = np.array([[1, 0], 
+              [0, 5]])
+
+
+a = cos_angle(x, y, M)
+angle = np.arccos(a)
+angle
 
 
 
+# Q5 ------------------------------------------------------------------------
+x = np.array([1, 1, 1])
+y = np.array([2, -1, 0])
+
+M = np.array([[1, 0, 0], 
+              [0, 2, -1], 
+              [0, -1, 3]])
 
 
+a = cos_angle(x, y, M)
+angle = np.arccos(a)
+angle
 
 
 

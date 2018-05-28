@@ -73,4 +73,17 @@ x = np.array([-1, -1, -1])
 np.transpose(x) @ x
 
 
+# Example 1: -------------------------------------------------------
+
+x = np.array([1, 1])
+y = np.array([-1,1])
+
+M = np.array([[2, 0],
+              [0, 1]])
+
+innerprod(x, y, M)
+
+
+innerprod(x, y, M)/np.sqrt(innerprod(x, x, M) * innerprod(y, y, M))
+
 
