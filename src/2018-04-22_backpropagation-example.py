@@ -82,9 +82,10 @@ def cost(x, y) :
 
                           
                           
-# GRADED FUNCTION
+#********************************************************************
+# Jacobian of the Cost fn with respect to the third layer weights and biases. 
+#********************************************************************
 
-# Jacobian for the third layer weights. There is no need to edit this function.
 def J_W3 (x, y) :
     # First get all the activations and weighted sums at each layer of the network.
     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
@@ -127,11 +128,98 @@ def J_b3 (x, y) :
     J = np.sum(J, axis=1, keepdims=True) / x.size
     return J
     
+
+
+
+
+#********************************************************************
+# Jacobian of the Cost fn with respect to the SECOND layer weights and biases. 
+#********************************************************************    
+# Compare this function to J_W3 to see how it changes.
+# There is no need to edit this function.
+def J_W2 (x, y) :
+    #The first two lines are identical to in J_W3.
+    a0, z1, a1, z2, a2, z3, a3 = network_function(x)    
+    J = 2 * (a3 - y)
     
+    # the next two lines implement da3/da2, first σ' and then W3.
+    J = J * d_sigma(z3)
+    J = (J.T @ W3).T
     
+    # then the final lines are the same as in J_W3 but with the layer number bumped down.
+    J = J * d_sigma(z2)  # z2 instead of z3 
+    J = J @ a1.T / x.size  # a1 instead of a2 
+    return J
+
+# As previously, fill in all the incomplete lines.
+# ===YOU SHOULD EDIT THIS FUNCTION===
+def J_b2 (x, y) :
+    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
     
+    # first find dC/da3
+    J = 2 * (a3 - y)
     
+    # the next two lines implement da3/da2, first σ' and then W3.
+    J = J * d_sigma(z3)
+    J = (J.T @ W3).T
     
+    # then find da2/dz2
+    J = J * d_sigma(z2)
+    
+    # dz/db = 1, so no need to multiply that 
+    J = np.sum(J, axis=1, keepdims=True) / x.size
+    return J
+
+    
+#********************************************************************
+# Jacobian of the Cost fn with respect to the THIRD layer weights and biases. 
+#********************************************************************    
+# derivative with respect to weights: -------------
+def J_W1 (x, y) :
+    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+    
+    # first find dC/da3
+    J = 2 * (a3 - y)
+    
+    # then find da3/da2, first σ' and then W3         
+    J = J * d_sigma(z3)
+    J = (J.T @ W3).T
+    
+    # now find da2/da1, first σ' and then W2
+    J = J * d_sigma(z2)
+    J = (J.T @ W2).T
+    
+    # then find da1/dz1
+    J = J * d_sigma(z1)
+    
+    # finally, we know that dz/dw = a0
+    J = J @ a0.T / x.size
+    return J
+
+
+# derivative with respect to biases: -------------     
+def J_b1 (x, y) :
+    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+    
+    # first find dC/da3
+    J = 2 * (a3 - y)
+    
+    # then find da3/da2, first σ' and then W3         
+    J = J * d_sigma(z3)
+    J = (J.T @ W3).T
+    
+    # now find da2/da1, first σ' and then W2
+    J = J * d_sigma(z2)
+    J = (J.T @ W2).T
+    
+    # then find da1/dz1
+    J = J * d_sigma(z1)
+    
+    # finally, we know that dz/db = 1: 
+    J = J * 1
+    
+    J = np.sum(J, axis=1, keepdims=True) / x.size
+    return J    
     
     
     
