@@ -6,7 +6,7 @@ Created on Wed May 23 16:28:00 2018
 """
 
 #************************************************************************
-# EFFECT OF AFFINE TRANSFORMATIONS ON MEAN AND VARIANCE 
+# EFFECT OF AFFINE TRANSFORMATIONS ON MEAN AND VARIANCE    
 #************************************************************************
 
 # import packages: 
@@ -238,15 +238,78 @@ plt.legend();
 
 
 
+# --------------------------------------------------------------------------------
+# 5. AFFINE TRANSFORMATION OF DATA: -------------------------------------------
+# --------------------------------------------------------------------------------
+def affine_mean(mean, A, b):
+    """Compute the mean after affine transformation
+    Args:
+        mean: ndarray, the mean vector
+        A, b: affine transformation applied to x
+    Returns:
+        mean vector after affine transformation
+    """
+    affine_m = (A @ mean) + b 
+    return affine_m
+
+
+def affine_covariance(S, A, b):
+    """Compute the covariance matrix after affine transformation
+    Args:
+        S: ndarray, the covariance matrix
+        A, b: affine transformation applied to each element in X        
+    Returns:
+        covariance matrix after the transformation
+    """
+    affine_cov = A @ (S @ np.transpose(A)) 
+    return affine_cov
+
+
+
+# generate test data: ------------------------------------------------------ 
+random = np.random.RandomState(42)  # set seed for random num
+# random
+
+A = random.randn(4,4); A
+b = random.randn(4); b; b.shape  # vector of 4 elements
+
+X = random.randn(100, 4); X
+X.shape  # (100, 4)
+
+mean(X); 
+mean(X).shape  # vector of 4 elements
+
+X1 = ((A @ (X.T)).T + b)  # applying affine transformation once
+X2 = ((A @ (X1.T)).T + b) # and again
+
+# --------------------------------------------------------------------------
+
+
+'''
+One very useful way to compare whether arrays are equal/similar is use the 
+helper functions in numpy.testing. the functions in numpy.testing will throw 
+an AssertionError when the output does not satisfy the assertion.
+'''
+
+# check mean function: -----------------------------------------------------
+np.testing.assert_almost_equal(mean(X1),
+                               affine_mean(mean(X), A, b))
+print('correct')
+
+
+
+# check covariance function: ----------------------------------------------------- 
+np.testing.assert_almost_equal(cov(X1),  
+                               affine_covariance(cov(X), A, b))
+print('correct')  # todo: why doesn't this work? 
+
+affine_covariance(cov(X), A, b)
+# shapes (2,2) and (4,4) not aligned: 2 (dim 1) != 4 (dim 0)
 
 
 
 
-
-
-
-
-
+A @ (S @ np.transpose(A)
 
 
 
