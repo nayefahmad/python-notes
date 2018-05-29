@@ -69,7 +69,7 @@ def mean_naive(X):
     
     Arguments
     ---------
-    X: (N, D) ndarray representing the dataset.
+    X: (N, D) ndarray representing the dataset. N rows, D columns. 
     
     Returns
     -------
@@ -78,9 +78,17 @@ def mean_naive(X):
     N, D = X.shape
     mean = np.zeros(D)
     for n in range(N):
-        mean = np.mean(D) # EDIT THIS
+        mean_row = np.mean(X[n]) 
+        mean.append(mean_row)
     return mean
     
+# test the function: 
+X = random.randn(10, 4); X
+# e.g. height, weight, IQ and salary for 10 ppl 
+
+mean_naive(X)  # scalar value 4 # todo: is this right? 
+
+
 
 
 def cov_naive(X):
@@ -97,8 +105,17 @@ def cov_naive(X):
     N, D = X.shape
     covariance = np.zeros((D, D))
     for n in range(N):
-        covariance = np.cov((D, D)) # EDIT THIS
+        covariance = np.cov(X) 
     return covariance    
+
+
+# test the function: 
+X = random.randn(10, 4); X
+# e.g. height, weight, IQ and salary for 10 ppl 
+
+cov_naive(X)
+cov_naive(X).shape  # N by N matrix
+
 
 
 # --------------------------------------------------------------------------------
@@ -116,7 +133,7 @@ def mean(X):
     -------
     mean: (D, ) ndarray which is the mean of the dataset.
     """
-    mean = X.mean(axis=0) # EDIT THIS
+    mean = X.mean(axis=0) 
     return mean
 
 
@@ -132,9 +149,9 @@ def cov(X):
     
     """
     # It is possible to vectorize our code for computing the covariance, i.e. we do not need to explicitly
-    # iterate over the entire dataset as looping in Python tends to be slow
+    #    iterate over the entire dataset as looping in Python tends to be slow
     N, D = X.shape
-    covariance_matrix = np.cov(D, D) # EDIT THIS
+    covariance_matrix = np.cov(X) 
     return covariance_matrix
 
 
@@ -273,11 +290,12 @@ random = np.random.RandomState(42)  # set seed for random num
 A = random.randn(4,4); A
 b = random.randn(4); b; b.shape  # vector of 4 elements
 
+# create dataset: 100 observations of 4 variables: 
 X = random.randn(100, 4); X
 X.shape  # (100, 4)
 
 mean(X); 
-mean(X).shape  # vector of 4 elements
+mean(X).shape  # (4, ) ==> vector of 4 elements
 
 X1 = ((A @ (X.T)).T + b)  # applying affine transformation once
 X2 = ((A @ (X1.T)).T + b) # and again
@@ -306,10 +324,11 @@ print('correct')  # todo: why doesn't this work?
 affine_covariance(cov(X), A, b)
 # shapes (2,2) and (4,4) not aligned: 2 (dim 1) != 4 (dim 0)
 
+cov(X).shape  # (2,2)
 
 
 
-A @ (S @ np.transpose(A)
+
 
 
 
