@@ -78,8 +78,7 @@ def mean_naive(X):
     N, D = X.shape
     mean = np.zeros(D)
     for n in range(N):
-        mean_row = np.mean(X[n]) 
-        mean.append(mean_row)
+        mean[n,] = np.mean(X[n]) 
     return mean
     
 # test the function: 
@@ -135,6 +134,14 @@ def mean(X):
     """
     mean = X.mean(axis=0) 
     return mean
+
+# test the function: 
+X = random.randn(10, 4); X
+# e.g. height, weight, IQ and salary for 10 ppl 
+
+mean(X)  # scalar value 4 # todo: is this right? 
+
+
 
 
 def cov(X):
