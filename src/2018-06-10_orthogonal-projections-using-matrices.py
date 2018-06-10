@@ -14,8 +14,13 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 import numpy as np
+import numpy.testing as np_test
 
 
+
+#****************************************************
+# PROJECTION ONTO 1D SUBSPACES 
+#****************************************************
 
 def projection_matrix_1d(b):
     """Compute the projection matrix onto the space spanned by `b`
@@ -25,13 +30,14 @@ def projection_matrix_1d(b):
     Returns:
         P: the projection matrix
     """
-    P = np.transpose(b) @ b
+    P_numerator = np.outer(b, np.transpose(b)) 
+    P_denom = np.linalg.norm(b)**2 
+    P = np.divide(P_numerator, P_denom)
+    
     return P
 
 # test the function: 
 projection_matrix_1d(np.array([1, 2, 2]))
-
-
 
 
 def project_1d(x, b):
@@ -46,8 +52,13 @@ def project_1d(x, b):
     p = projection_matrix_1d(b) @ x 
     return p
 
-# Projection onto general subspace
-# ===YOU SHOULD EDIT THIS FUNCTION===
+    
+
+    
+#****************************************************
+# PROJECTION ONTO GENERAL N-DIMENSIONAL SUBSPACES 
+#****************************************************
+
 def projection_matrix_general(B):
     """Compute the projection matrix onto the space spanned by `B`
     Args:
@@ -56,10 +67,9 @@ def projection_matrix_general(B):
     Returns:
         P: the projection matrix
     """
-    P = np.eye(B.shape[0]) # EDIT THIS
+    P = B @ np.linalg.inv(np.transpose(B) @ B) @ np.transpose(B) 
     return P
 
-# ===YOU SHOULD EDIT THIS FUNCTION===
 def project_general(x, B):
     """Compute the projection matrix onto the space spanned by `B`
     Args:
@@ -68,5 +78,58 @@ def project_general(x, B):
     Returns:
         y: projection of x in space spanned by b
     """
-    p = np.zeros(x.shape) # EDIT THIS
+    p = projection_matrix_general(B) @ x 
     return p
+    
+    
+    
+    
+#****************************************************
+# TESTING THE PROJECTIONS: 
+#****************************************************
+
+# Orthogonal projection in 2d
+# define basis vector for subspace
+b = np.array([2,1]).reshape(-1,1); print(b)  # todo: what does reshape do here? 
+# point to be projected later
+x = np.array([1,2]).reshape(-1, 1); print(x) 
+
+
+# Test 1D
+x = projection_matrix_1d(np.array([1, 2, 2]))
+print(x)
+
+np_test.assert_almost_equal(projection_matrix_1d(np.array([1, 2, 2])), 
+                            np.array([[1,  2,  2],
+                                      [2,  4,  4],
+                                      [2,  4,  4]]) / 9)
+
+np_test.assert_almost_equal(project_1d(np.ones(3),
+                                       np.array([1, 2, 2])),
+                            np.array([5, 10, 10]) / 9)
+
+B = np.array([[1, 0],
+              [1, 1],
+              [1, 2]])
+
+# Test General
+np_test.assert_almost_equal(projection_matrix_general(B), 
+                            np.array([[5,  2, -1],
+                                      [2,  2,  2],
+                                      [-1, 2,  5]]) / 6)
+
+np_test.assert_almost_equal(project_general(np.array([6, 0, 0]), B), 
+                            np.array([5, 2, -1]))
+print('correct')
+
+
+
+
+
+
+
+
+
+
+
+
