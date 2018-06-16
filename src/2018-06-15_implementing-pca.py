@@ -103,7 +103,7 @@ def eig(S):
     
     # now re-sort: 
     eigvals = eigvals[i]
-    eigvecs = eigvecs[i]
+    eigvecs = eigvecs[:, i]
     
     return (eigvals, eigvecs) 
 
@@ -146,7 +146,7 @@ def PCA(X, num_components):
     # Xbar = normalize(X)[0]
     
     # Compute the data covariance matrix S
-    S = np.cov(X, rowvar = False)
+    S = np.cov(X)
 
     # Next find eigenvalues and corresponding eigenvectors for S by implementing eig().
     eig_vals, eig_vecs = eig(S)
@@ -178,7 +178,7 @@ Xbar, mu, std = normalize(X)
 
 # testing: 
 print(Xbar)
-PCA(Xbar, 1)
+PCA(X, 1)
 
 
     
