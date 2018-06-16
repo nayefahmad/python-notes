@@ -101,7 +101,7 @@ def eig(S):
     # index: first entry gives location of largest element: 
     i = np.argsort(-eigvals)
     
-    # now resort: 
+    # now re-sort: 
     eigvals = eigvals[i]
     eigvecs = eigvecs[i]
     
@@ -143,10 +143,10 @@ def PCA(X, num_components):
         of X from the first `num_components` principal components.
     """
     # normalize the data: 
-    Xbar = normalize(X)[0]
+    # Xbar = normalize(X)[0]
     
     # Compute the data covariance matrix S
-    S = np.cov(Xbar)
+    S = np.cov(X, rowvar = False)
 
     # Next find eigenvalues and corresponding eigenvectors for S by implementing eig().
     eig_vals, eig_vecs = eig(S)
@@ -154,11 +154,14 @@ def PCA(X, num_components):
     # Reconstruct the images from the lowerdimensional representation
     # To do this, we first need to find the projection_matrix (which you implemented earlier)
     # which projects our input data onto the vector space spanned by the eigenvectors
-    P = projection_matrix(eig_vecs)# projection matrix
+    P = projection_matrix(eig_vecs[:, :num_components]) # projection matrix
     
+    # print(P)
+    
+
     # Then for each data point x_i in the dataset X 
     #   we can project the original x_i onto the eigenbasis.
-    X_reconstruct = P @ Xbar
+    X_reconstruct = P @ X
     return X_reconstruct
 
     
@@ -172,15 +175,45 @@ def PCA(X, num_components):
 NUM_DATAPOINTS = 1000
 X = (MNIST.data.reshape(-1, 28 * 28)[:NUM_DATAPOINTS]) / 255.
 Xbar, mu, std = normalize(X)
-    
+
+# testing: 
+print(Xbar)
+PCA(Xbar, 1)
 
 
+    
+# define MSE: 
+def mse(predict, actual):
+    return np.square(predict - actual).sum(axis=1).mean()
 
     
     
     
-    
+'''
+The greater number of of principal components we use, the smaller will our 
+reconstruction error be. Now, let's answer the following question:
 
+How many principal components do we need in order to reach a Mean Squared 
+Error (MSE) of less than  100100  for our dataset?
+'''
+ 
+loss = []
+reconstructions = []
+for num_component in range(1, 100):
+    reconst = PCA(Xbar, num_component)
+    error = mse(reconst, Xbar)
+    reconstructions.append(reconst)
+    # print('n = {:d}, reconstruction_error = {:f}'.format(num_component, error))
+    loss.append((num_component, error))
+
+reconstructions = np.asarray(reconstructions)
+reconstructions = reconstructions * std + mu # "unnormalize" the reconstructed image
+loss = np.asarray(loss)    
+    
+print(loss)
+ 
+   
+# We can also put these numbers into perspective by plotting them.
 
 
 
