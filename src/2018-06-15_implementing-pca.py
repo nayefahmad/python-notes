@@ -16,6 +16,13 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 
+from sklearn.datasets import fetch_mldata
+MNIST = fetch_mldata('MNIST original', data_home='./MNIST')
+%matplotlib inline
+
+plt.figure(figsize=(4,4))
+plt.imshow(MNIST.data[0].reshape(28,28), cmap='gray');
+
 
 '''
 Now we will implement PCA. Before we do that, let's pause for a moment and 
@@ -106,10 +113,73 @@ eig(test_array[0:3, :])
 
 
 
+# function to get the projection matrix that projects onto the eigvecs of S: 
+def projection_matrix(B):
+    """Compute the projection matrix onto the space spanned by `B`
+    Args:
+        B: ndarray of dimension (D, M), the basis for the subspace
+    
+    Returns:
+        P: the projection matrix
+    """
+    
+    # Since we assume cols of B are an orthonormal basis, the proj 
+    #   matrix has the simplified form B @ B-transpose 
+    P = B @ np.transpose(B) 
+    return P    
 
 
 
 
+# function to actually do the PCA: 
+def PCA(X, num_components):
+    """
+    Args:
+        X: ndarray of size (N, D), where D is the dimension of the data,
+           and N is the number of datapoints
+        num_components: the number of principal components to use.
+    Returns:
+        X_reconstruct: ndarray of the reconstruction
+        of X from the first `num_components` principal components.
+    """
+    # normalize the data: 
+    Xbar = normalize(X)[0]
+    
+    # Compute the data covariance matrix S
+    S = np.cov(Xbar)
+
+    # Next find eigenvalues and corresponding eigenvectors for S by implementing eig().
+    eig_vals, eig_vecs = eig(S)
+    
+    # Reconstruct the images from the lowerdimensional representation
+    # To do this, we first need to find the projection_matrix (which you implemented earlier)
+    # which projects our input data onto the vector space spanned by the eigenvectors
+    P = projection_matrix(eig_vecs)# projection matrix
+    
+    # Then for each data point x_i in the dataset X 
+    #   we can project the original x_i onto the eigenbasis.
+    X_reconstruct = P @ Xbar
+    return X_reconstruct
+
+    
+  
+
+#*********************************************************************    
+# IMPLEMENTING PCA ON MNIST DATASET: 
+#*********************************************************************
+    
+## Some preprocessing of the data
+NUM_DATAPOINTS = 1000
+X = (MNIST.data.reshape(-1, 28 * 28)[:NUM_DATAPOINTS]) / 255.
+Xbar, mu, std = normalize(X)
+    
+
+
+
+    
+    
+    
+    
 
 
 
