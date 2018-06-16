@@ -125,7 +125,7 @@ def projection_matrix(B):
     
     # Since we assume cols of B are an orthonormal basis, the proj 
     #   matrix has the simplified form B @ B-transpose 
-    P = B @ np.transpose(B) 
+    P = B @ np.linalg.inv(np.transpose(B) @ B) @ np.transpose(B)
     return P    
 
 
