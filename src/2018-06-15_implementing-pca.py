@@ -146,7 +146,7 @@ def PCA(X, num_components):
     # Xbar = normalize(X)[0]
     
     # Compute the data covariance matrix S
-    S = np.cov(X)
+    S = np.cov(X, rowvar=False, bias=True)
 
     # Next find eigenvalues and corresponding eigenvectors for S by implementing eig().
     eig_vals, eig_vecs = eig(S)
@@ -161,7 +161,7 @@ def PCA(X, num_components):
 
     # Then for each data point x_i in the dataset X 
     #   we can project the original x_i onto the eigenbasis.
-    X_reconstruct = P @ X
+    X_reconstruct = X @ P
     return X_reconstruct
 
     
