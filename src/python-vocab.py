@@ -54,6 +54,50 @@ type(b)
 # Strings, lists, dictionaries 
 #**************************************
 
+values = []  # create empty list
+
+x = [10, 10, 'hi']  # heterogeneous list 
+
+# list methods: ----------
+# append() is a 'method', which is a function "attached to" an object - in this
+# case, the list x. 
+x.append("yo")
+print(x)
+
+# pop() method: 
+x.pop()
+
+# more list methods: --------
+# here's the full list: https://docs.python.org/3/tutorial/datastructures.html#more-on-lists 
+
+x.pop()
+x.append('new'); x
+x.insert(0, "first"); x
+x.remove("yo"); x
+x.index("hi")
+x.count(10)
+x.sort()  # only works for all numeric elements 
+
+
+# example: 
+fruits = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'banana']
+fruits.index('banana')  # first instance of banana is at position 3 (counting from 0)
+fruits.index('banana', 4)  # second banana is at position 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -79,6 +123,19 @@ addtwo(4)
 addtwo(2)
 
 
+
+# lambda functions: -----------------
+# these are unnamed functions that are defined "inline": 
+squares = list(map(lambda x: x**2, range(10)))
+squares
+
+# the x after lambda specifies name of the argument to the function, the 
+# operations after the colon specify what to do with the argument. 
+
+# Note: the above can be better achieved as follows: 
+squares2 = [x**2 for x in range(10)]
+
+squares == squares2  # True 
 
 
 
