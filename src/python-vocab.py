@@ -60,9 +60,19 @@ type(b)
 
 values = []  # create empty list
 
-x = [10, 10, 'hi']  # heterogeneous list 
+x = [10, 20, 'hi', "yes"]  # heterogeneous list 
 type(x)
 print(x)
+
+# note that lists are zero-indexed: 
+x[0] == 10 
+x[2] == "hi"
+
+x[1:]  # subset the list from index 1 to end (left endpoint INCLUDED)
+x[:2]  # subset the list from index 0 to index 2 (right endpoint EXCLUDED)
+
+x[1:3]
+
 
 # list methods: ----------
 # append() is a 'method', which is a function "attached to" an object - in this
@@ -101,8 +111,8 @@ fruits.index('banana', 4)  # second banana is at position 5; argument "4" used t
 # fill an empty list with a for loop: 
 list1 = []
 
-for i in range(20): 
-    # print(i)
+for i in range(12): 
+    print("Number being appended is: " + str(i))
     list1.append(i)  # note that we don't need an explicit assignment statement such as list1 = list1.append(i)
 
 list1
