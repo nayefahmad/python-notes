@@ -55,7 +55,7 @@ type(b)
 
 
 #**************************************
-# Containers: lists, tuples, dictionaries 
+# Containers: Lists 
 #**************************************
 
 values = []  # create empty list
@@ -118,6 +118,53 @@ for i in range(12):
 list1
 
 
+
+
+# List comprehensions -----
+# List comprehensions are an elegant Python tool for creating lists.
+
+# Common applications are to make new lists where each element
+# is the result of some operations applied to each member of another sequence 
+# or iterable
+
+# reference: https://docs.python.org/3/tutorial/datastructures.html
+
+'''
+A list comprehension consists of an expression followed 
+by a for clause, then zero or more for or if clauses - all of which are enclosed 
+in square brackets. 
+
+The result will be a new list resulting from evaluating the expression in the 
+context of the for and if clauses which follow it.
+
+Example: instead of the indented "for loop" structure above, use: 
+'''
+
+list2 = [i for i in range(12)]
+list2
+
+list1 == list2
+
+
+# partial fizzbuzz: 
+ans = [str(i) + " fizzbuzz" for i in range(101) if i%15 == 0]
+ans
+
+# full fizzbuzz: 
+for i in range(101): 
+    if i%15 == 0: 
+        print("fizzbuzz")
+    elif i%3 == 0 : 
+        print("fizz")
+    elif i%5 == 0: 
+        print("buzz") 
+    else: 
+        print(i) 
+
+
+        
+    
+    
 
 
 
