@@ -15,7 +15,11 @@ import matplotlib.pyplot as plt
 2**3 # exponent
 2//3 # floor division 
 3//2
+
 2/3  # division
+
+2%3  # modulo 
+10%3
 
 x = 4 + 5 
 y=x-2
@@ -51,12 +55,14 @@ type(b)
 
 
 #**************************************
-# Strings, lists, dictionaries 
+# Containers: lists, tuples, dictionaries 
 #**************************************
 
 values = []  # create empty list
 
 x = [10, 10, 'hi']  # heterogeneous list 
+type(x)
+print(x)
 
 # list methods: ----------
 # append() is a 'method', which is a function "attached to" an object - in this
@@ -65,34 +71,49 @@ x.append("yo")
 print(x)
 
 # pop() method: 
-x.pop()
+# Remove the item at the given position in the list, and 
+# return it. If no index is specified, a.pop() removes and 
+# returns the last item in the list.
+x.pop(); x  # you don't need to say "print(x)" 
+x.pop(0); x
+x.pop(1); x
 
 # more list methods: --------
 # here's the full list: https://docs.python.org/3/tutorial/datastructures.html#more-on-lists 
 
-x.pop()
+x.pop(); x
 x.append('new'); x
+x.append('hi'); x
 x.insert(0, "first"); x
-x.remove("yo"); x
+x.remove("first"); x
 x.index("hi")
 x.count(10)
-x.sort()  # only works for all numeric elements 
+x.sort(); x  # only works for all numeric elements 
 
 
 # example: 
 fruits = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'banana']
 fruits.index('banana')  # first instance of banana is at position 3 (counting from 0)
-fruits.index('banana', 4)  # second banana is at position 5
+fruits.index('banana', 4)  # second banana is at position 5; argument "4" used to say, start searching the list from that position
+
+
+
+# fill an empty list with a for loop: 
+list1 = []
+
+for i in range(20): 
+    # print(i)
+    list1.append(i)  # note that we don't need an explicit assignment statement such as list1 = list1.append(i)
+
+list1
 
 
 
 
 
-
-
-
-
-
+#**************************************
+# Strings 
+#**************************************
 
 
 
