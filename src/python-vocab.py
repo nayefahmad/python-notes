@@ -15,7 +15,11 @@ import matplotlib.pyplot as plt
 2**3 # exponent
 2//3 # floor division 
 3//2
+
 2/3  # division
+
+2%3  # modulo 
+10%3
 
 x = 4 + 5 
 y=x-2
@@ -51,12 +55,24 @@ type(b)
 
 
 #**************************************
-# Strings, lists, dictionaries 
+# Containers: Lists 
 #**************************************
 
 values = []  # create empty list
 
-x = [10, 10, 'hi']  # heterogeneous list 
+x = [10, 20, 'hi', "yes"]  # heterogeneous list 
+type(x)
+print(x)
+
+# note that lists are zero-indexed: 
+x[0] == 10 
+x[2] == "hi"
+
+x[1:]  # subset the list from index 1 to end (left endpoint INCLUDED)
+x[:2]  # subset the list from index 0 to index 2 (right endpoint EXCLUDED)
+
+x[1:3]
+
 
 # list methods: ----------
 # append() is a 'method', which is a function "attached to" an object - in this
@@ -65,34 +81,96 @@ x.append("yo")
 print(x)
 
 # pop() method: 
-x.pop()
+# Remove the item at the given position in the list, and 
+# return it. If no index is specified, a.pop() removes and 
+# returns the last item in the list.
+x.pop(); x  # you don't need to say "print(x)" 
+x.pop(0); x
+x.pop(1); x
 
 # more list methods: --------
 # here's the full list: https://docs.python.org/3/tutorial/datastructures.html#more-on-lists 
 
-x.pop()
+x.pop(); x
 x.append('new'); x
+x.append('hi'); x
 x.insert(0, "first"); x
-x.remove("yo"); x
+x.remove("first"); x
 x.index("hi")
 x.count(10)
-x.sort()  # only works for all numeric elements 
+x.sort(); x  # only works for all numeric elements 
 
 
 # example: 
 fruits = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'banana']
 fruits.index('banana')  # first instance of banana is at position 3 (counting from 0)
-fruits.index('banana', 4)  # second banana is at position 5
+fruits.index('banana', 4)  # second banana is at position 5; argument "4" used to say, start searching the list from that position
+
+
+
+# fill an empty list with a for loop: 
+list1 = []
+
+for i in range(12): 
+    print("Number being appended is: " + str(i))
+    list1.append(i)  # note that we don't need an explicit assignment statement such as list1 = list1.append(i)
+
+list1
 
 
 
 
+# List comprehensions -----
+# List comprehensions are an elegant Python tool for creating lists.
+
+# Common applications are to make new lists where each element
+# is the result of some operations applied to each member of another sequence 
+# or iterable
+
+# reference: https://docs.python.org/3/tutorial/datastructures.html
+
+'''
+A list comprehension consists of an expression followed 
+by a for clause, then zero or more for or if clauses - all of which are enclosed 
+in square brackets. 
+
+The result will be a new list resulting from evaluating the expression in the 
+context of the for and if clauses which follow it.
+
+Example: instead of the indented "for loop" structure above, use: 
+'''
+
+list2 = [i for i in range(12)]
+list2
+
+list1 == list2
+
+
+# partial fizzbuzz: 
+ans = [str(i) + " fizzbuzz" for i in range(101) if i%15 == 0]
+ans
+
+# full fizzbuzz: 
+for i in range(101): 
+    if i%15 == 0: 
+        print("fizzbuzz")
+    elif i%3 == 0 : 
+        print("fizz")
+    elif i%5 == 0: 
+        print("buzz") 
+    else: 
+        print(i) 
+
+
+        
+    
+    
 
 
 
-
-
-
+#**************************************
+# Strings 
+#**************************************
 
 
 
