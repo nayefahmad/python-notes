@@ -1,0 +1,21 @@
+---
+title: "Reticulate test drive"
+author: "Nayef"
+date: "15/11/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{python}
+
+def addtwo (num): 
+    return(num + 2)
+    
+addtwo(62)
+
+```
+
