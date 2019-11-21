@@ -37,6 +37,8 @@ type(iris_dataset['data'])  # numpy.ndarray
 dir(iris_dataset)  
 #dir(iris_dataset['data']) # not useful 
 
+
+# todo: rewrite after going through pandas subsetting tutorials 
 iris_dataset['data'][:6,]
 iris_dataset['feature_names']
 iris_dataset['target']
