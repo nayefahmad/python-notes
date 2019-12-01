@@ -7,6 +7,7 @@ Created on Sat Nov 30 18:32:41 2019
 """
 
 import numpy as np 
+from functools import partial
 
 #%% Backtracking "engine" function 
 
@@ -28,10 +29,12 @@ def solve(values, safe_up_to, size):
     def extend_solution(position):
         for value in values:
             solution[position] = value
-            if safe_up_to(solution, position):
-                if position >= size-1 or extend_solution(position+1):
-                    return solution
-        return None
+            if safe_up_to(solution):
+                if position >= size-1:
+                    yield np.array(solution)
+                else: 
+                    yield from extend_solution(position+1)
+        solution[position] = None
 
     return extend_solution(0)
 
@@ -40,7 +43,7 @@ def solve(values, safe_up_to, size):
 
 #%% Function to check partial solutions 
     
-def safe_up_to(partial_solution, target = 100): 
+def safe_up_to(target, partial_solution): 
     """
     Checks that a partial solution (string of numerals) sums to less than 10
     
@@ -59,6 +62,11 @@ def safe_up_to(partial_solution, target = 100):
     
     
     
-#%% 
+#%% Call the backtracking function
+
+for sol in solve(values=range(10), safe_up_to=partial(safe_up_to, 4), size=7):
+    print(sol, sol.sum())
+
+
 
 
