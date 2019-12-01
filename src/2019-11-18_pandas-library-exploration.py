@@ -13,8 +13,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels as sm
 
-%matplotlib inline  # other option is: `%matplotlib qt5`
-
+%matplotlib qt5
+#%matplotlib inline  # other option is: `%matplotlib qt5`s
+plt.rcParams['figure.figsize'] = [8, 8]  # default fig size in jupyter notebooks; doesn't work here? 
 
 
 #%% Create a pd dataframe: examples from docs 
@@ -59,6 +60,8 @@ df2 = pd.DataFrame(data = np.stack((col1, col2, col3), axis = 1),
 df1
 df2
 
+df1.dtypes
+df2.dtypes  # note that both cols were coerced to floats when we stacked the np arrays 
 
 
 
@@ -91,13 +94,22 @@ df1.dtypes
 #%% subsetting the df 
 # reference: https://medium.com/dunder-data/selecting-subsets-of-data-in-pandas-6fcd0170be9c
 
+# Subsetting rows: 
 # get first 5 rows
 df1[:5]  # option 1 - not recommended bcoz not clear if the args are labels or integer locations 
 df1.loc[:'a5']  # option 2  # .loc works based on label, not numeric position 
 df1.iloc[:5]  # option 3  # .iloc uses integer positions 
 
 
-df2.dtypes  # note that both cols were coerced to floats when we stacked the np arrays 
+
+# Subsetting cols: 
+x = df1['col_1']
+type(x)  # pd Series 
+
+y = df1.col_1  # selecting col using dot notation 
+type(y)  # pd Series 
+
+df1[['col_1','col_2']]
 
 
 #%%Plots 
