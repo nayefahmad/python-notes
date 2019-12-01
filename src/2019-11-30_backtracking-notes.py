@@ -64,9 +64,24 @@ def safe_up_to(target, partial_solution):
     
 #%% Call the backtracking function
 
+# correct way to generate outputs: 
 for sol in solve(values=range(10), safe_up_to=partial(safe_up_to, 4), size=7):
     print(sol, sol.sum())
 
 
+# what if I just call solve()?
+# solve(values=range(10), safe_up_to=partial(safe_up_to, 4), size=7)
+#Out[38]: <generator object solve.<locals>.extend_solution at 0x00000176AC39EF10>
+
+# Can we use a listcomp? 
+# [sol in solve(values=range(10), safe_up_to=partial(safe_up_to, 4), size=7)]
+# ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+# can we create a list of lists?
+#solutions = []
+#i = 0
+#for sol in solve(values=range(10), safe_up_to=partial(safe_up_to, 4), size=7):
+#    solutions[i] = sol
+#    i += i
 
 
